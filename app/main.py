@@ -103,9 +103,13 @@ async def shorten_link(link_create: schemas.LinkCreate, db: Session = Depends(ge
             link = db.query(models.Link).filter(models.Link.short_code == short_code).first()
 
     expires_at = link_create.expires_at
+    original_url = link_create.original_url
+
+    if ((original_url[:8] != 'https://') and (original_url[:7] != 'http://')):
+        original_url = 'http://' + original_url
 
     link_with_short_code = models.Link(
-        original_url=link_create.original_url,
+        original_url=original_url,
         short_code=short_code,
         created_at=datetime.strptime(datetime.now(tz).strftime("%Y-%m-%d %H:%M"), "%Y-%m-%d %H:%M"),
         expires_at=expires_at
