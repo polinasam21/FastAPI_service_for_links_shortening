@@ -105,9 +105,6 @@ async def shorten_link(link_create: schemas.LinkCreate, db: Session = Depends(ge
     expires_at = link_create.expires_at
     original_url = link_create.original_url
 
-    if ((original_url[:8] != 'https://') and (original_url[:7] != 'http://')):
-        original_url = 'http://' + original_url
-
     link_with_short_code = models.Link(
         original_url=original_url,
         short_code=short_code,
@@ -119,7 +116,7 @@ async def shorten_link(link_create: schemas.LinkCreate, db: Session = Depends(ge
     db.commit()
     db.refresh(link_with_short_code)
 
-    return {"message" : "Link successfully created", "original_url" : link_create.original_url, "short_code": short_code}
+    return {"message" : "Link successfully created", "original_url" : original_url, "short_code": short_code}
 
 
 @app.get("/links/{short_code}")
@@ -136,7 +133,12 @@ async def redirect_link(short_code: str, db: Session = Depends(get_db)):
     if ((link.expires_at is not None) and (link.expires_at < datetime.strptime(datetime.now(tz).strftime("%Y-%m-%d %H:%M"), "%Y-%m-%d %H:%M"))):
         raise HTTPException(status_code=400, detail="Link expired")
 
-    return RedirectResponse(url=link.original_url)
+    original_url = link.original_url
+
+    if ((original_url[:8] != 'https://') and (original_url[:7] != 'http://')):
+        original_url = 'http://' + original_url
+
+    return RedirectResponse(url=original_url)
 
 
 @app.delete("/links/{short_code}")
