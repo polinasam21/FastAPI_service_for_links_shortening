@@ -88,8 +88,24 @@ API будет доступно по адресу: `http://0.0.0.0:8000/`
 ![Снимок экрана от 2025-03-21 00-34-54](https://github.com/user-attachments/assets/671ad290-09ce-484d-99a4-b0a60e21dcb8)
 
 `DELETE /links/remove_unused/links`
+
 ![Снимок экрана от 2025-03-21 00-36-43](https://github.com/user-attachments/assets/648771c7-955d-436d-9320-15d51096070e)
 
 `GET /links/expired/links`
+
 ![Снимок экрана от 2025-03-21 00-49-18](https://github.com/user-attachments/assets/b7cbf44e-8541-469a-b73a-240851256d03)
+
+## Тестирование
+
+Тесты для сервиса находятся в папке tests
+
+Для запуска тестов и отображения процента покрытия кода тестами выполните
+
+```bash
+python -m pytest --cov app tests
+```
+
+Процент покрытия кода тестами:
+
+![tests_cover](https://github.com/user-attachments/assets/10563831-8ccf-4f61-816c-ae2e82a6e885)
 
