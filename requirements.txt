@@ -10,3 +10,8 @@ python-dotenv~=1.0.1
 python-multipart
 pydantic~=2.10.6
 pytz
+pytest-cov
+pytest
+coverage
+httpx
+locust

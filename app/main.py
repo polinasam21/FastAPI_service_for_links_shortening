@@ -154,7 +154,10 @@ async def delete_link(short_code: str, current_user: models.User = Depends(get_c
 
 
 @app.put("/links/{short_code}")
-async def update_link(short_code_old: str, short_code_new: str, current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+async def update_link(link_update_data: schemas.LinkUpdate, current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
+    short_code_old = link_update_data.short_code_old
+    short_code_new = link_update_data.short_code_new
+
     link = db.query(models.Link).filter(models.Link.short_code == short_code_old).first()
     if link is None:
         raise HTTPException(status_code=404, detail="Link not found")
@@ -229,4 +232,3 @@ async def get_expired_links(db: Session = Depends(get_db)):
         )
 
     return expired_links_list
-

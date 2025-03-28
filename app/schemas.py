@@ -19,6 +19,10 @@ class LinkCreate(BaseModel):
     custom_alias: Optional[str] = None
     expires_at: Optional[datetime] = Field(default=None, example=datetime.now(tz).strftime("%Y-%m-%d %H:%M"))
 
+class LinkUpdate(BaseModel):
+    short_code_old: str
+    short_code_new: str
+
 class Link(BaseModel):
     id: int
     original_url: str
