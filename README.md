@@ -101,7 +101,7 @@ API будет доступно по адресу: `http://0.0.0.0:8000/`
 
 Для запуска тестов и отображения процента покрытия кода тестами:
 
-В файле app/database.py замените database на {DB_HOST}
+В файле app/database.py в переменной SQLALCHEMY_DATABASE_URL замените database на {DB_HOST}
 
 Выполните
 
